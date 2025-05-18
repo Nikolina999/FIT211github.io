@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoHome Shop / ЕкоДім Магазин</title>
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #8BC34A;
+            --accent-color: #2E7D32;
+            --light-color: #F1F8E9;
+            --dark-color: #33691E;
+            --text-color: #212121;
+            --light-text: #757575;
+            --white: #FFFFFF;
+            --gray: #EEEEEE;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-icon {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-right: 10px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .lang-switch {
+            background: var(--gray);
+            border-radius: 20px;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-left: 20px;
+        }
+
+        .lang-switch:hover {
+            background: #DEDEDE;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-actions a {
+            margin-left: 15px;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .user-actions .btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .user-actions .btn:hover {
+            background-color: var(--accent-color);
+        }
+
+        .hero {
+            background: linear-gradient(to right, rgba(76, 175, 80, 0.9), rgba(139, 195, 74, 0.7)), url('/api/placeholder/1200/400') no-repeat center center;
+            background-size: cover;
+            color: var(--white);
+            text-align: center;
+            padding: 150px 0 100px;
+            margin-top: 80px;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background-color: var(--white);
+            color: var(--primary-color);
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-btn:hover {
+            background-color: var(--accent-color);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .featured-products {
+            padding: 80px 0;
+            background-color: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--accent-color);
+            font-size: 2rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .product-price {
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        .product-description {
+            color: var(--light-text);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .add-to-cart {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-align: center;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background-color: var(--accent-color);
+        }
+
+        .categories {
+            padding: 80px 0;
+            background-color: var(--light-color);
+        }
+
+        .categories-flex {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .category-card {
+            flex: 1 1 200px;
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin: 30px 0 15px;
+        }
+
+        .category-title {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--text-color);
+        }
+
+        .benefits {
+            padding: 80px 0;
+            background-color: var(--white);
+        }
+
+        .benefits-flex {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .benefit-card {
+            flex: 1 1 300px;
+            padding: 30px;
+            background-color: var(--light-color);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .benefit-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+
+        .benefit-description {
+            color: var(--light-text);
+        }
+
+        .testimonials {
+            padding: 80px 0;
+            background-color: var(--light-color);
+        }
+
+        .testimonials-flex {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            padding: 20px 0;
+        }
+
+        .testimonial-card {
+            flex: 0 0 300px;
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .rating {
+            color: #FFD700;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--white);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .admin-panel {
+            display: none;
+            padding: 120px 0 60px;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .admin-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 30px;
+        }
+
+        .admin-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            border-radius: 4px 4px 0 0;
+            margin-right: 5px;
+        }
+
+        .admin-tab.active {
+            background-color: var(--white);
+            border-color: #ddd;
+            color: var(--primary-color);
+        }
+
+        .admin-content {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .admin-table th, .admin-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .admin-table th {
+            background-color: var(--light-color);
+            font-weight: 600;
+        }
+
+        .admin-form {
+            max-width: 600px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .btn-submit {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--accent-color);
+        }
+
+        .cart-page {
+            display: none;
+            padding: 120px 0 60px;
+        }
+
+        .cart-page.active {
+            display: block;
+        }
+
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .cart-table th, .cart-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cart-table th {
+            background-color: var(--light-color);
+            font-weight: 600;
+        }
+
+        .cart-product {
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-product img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            margin-right: 15px;
+            border-radius: 4px;
+        }
+
+        .cart-quantity {
+            display: flex;
+            align-items: center;
+        }
+
+        .qty-btn {
+            width: 30px;
+            height: 30px;
+            background-color: var(--gray);
+            border: none;
+            border-radius: 4px;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .qty-input {
+            width: 50px;
+            text-align: center;
+            border: 1px solid #ddd;
+            margin: 0 10px;
+            padding: 5px;
+            border-radius: 4px;
+        }
+
+        .remove-btn {
+            background-color: #f44336;
+            color: var(--white);
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .cart-total-table {
+            width: 300px;
+            border-collapse: collapse;
+        }
+
+        .cart-total-table td {
+            padding: 10px;
+        }
+
+        .cart-total-table tr:last-child {
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .checkout-btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background-color: var(--accent-color);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            nav ul {
+                margin-top: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 5px 10px;
+            }
+
+            .user-actions {
+                margin-top: 20px;
+            }
+
+            .hero {
+                padding: 120px 0 70px;
+                margin-top: 150px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .categories-flex {
+                flex-direction: column;
+            }
+
+            .benefits-flex {
+                flex-direction: column;
+            }
+
+            .testimonials-flex {
+                flex-direction: column;
+            }
+
+            .testimonial-card {
+                flex: none;
+            }
+        }
+
+        /* Hidden until language selection */
+        .en, .uk {
+            display: none;
+        }
+
+        /* Default language is English */
+        .en {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-icon">♻️</div>
+                <div class="logo-text">
+                    <span class="en">EcoHome Shop</span>
+                    <span class="uk">ЕкоДім Магазин</span>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="#" class="en" onclick="showPage('home')">Home</a>
+                        <a href="#" class="uk" onclick="showPage('home')">Головна</a>
+                    </li>
+                    <li>
+                        <a href="#" class="en" onclick="showPage('catalog')">Catalog</a>
+                        <a href="#" class="uk" onclick="showPage('catalog')">Каталог</a>
+                    </li>
+                    <li>
+                        <a href="#" class="en">About Us</a>
+                        <a href="#" class="uk">Про нас</a>
+                    </li>
+                    <li>
+                        <a href="#" class="en">Contact</a>
+                        <a href="#" class="uk">Контакти</a>
+                    </li>
+                    <li>
+                        <button class="lang-switch" onclick="toggleLanguage()">
+                            <span class="en">🇺🇦 UA</span>
+                            <span class="uk">🇬🇧 EN</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <a href="#" onclick="showPage('cart')">
+                    <span class="en">🛒 Cart (0)</span>
+                    <span class="uk">🛒 Кошик (0)</span>
+                </a>
+                <a href="#" class="btn" onclick="showPage('admin')">
+                    <span class="en">Admin</span>
+                    <span class="uk">Адмін</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <div id="home-page" class="page active">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1 class="en">Eco-Friendly Products for Your Home</h1>
+                <h1 class="uk">Екологічні товари для вашого дому</h1>
+                <p class="en">Make a difference with sustainable alternatives for everyday products</p>
+                <p class="uk">Робіть різницю з екологічними альтернативами для повсякденних товарів</p>
+                <a href="#" class="cta-btn" onclick="showPage('catalog')">
+                    <span class="en">Shop Now</span>
+                    <span class="uk">Купити зараз</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Featured Products -->
+        <section class="featured-products">
+            <div class="container">
+                <h2 class="section-title en">Featured Products</h2>
+                <h2 class="section-title uk">Популярні товари</h2>
+                <div class="products-grid">
+                    <!-- Product 1 -->
+                    <div class="product-card">
+                        <img src="/api/placeholder/300/200" alt="Bamboo Toothbrush" class="product-img">
+                        <div class="product-info">
+                            <h3 class="product-title en">Bamboo Toothbrush Set</h3>
+                            <h3 class="product-title uk">Набір бамбукових зубних щіток</h3>
+                            <p class="product-price">$12.99 / 480₴</p>
+                            <p class="product-description en">Pack of 4 eco-friendly bamboo toothbrushes with charcoal-infused bristles.</p>
+                            <p class="product-description uk">Набір з 4 екологічних бамбукових зубних щіток з щетиною, насиченою вугіллям.</p>
+                            <button class="add-to-cart">
+                                <span class="en">Add to Cart</span>
+                                <span class="uk">Додати в кошик</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 -->
+                    <div class="product-card">
+                        <img src="/api/placeholder/300/200" alt="Metal Straws" class="product-img">
+                        <div class="product-info">
+                            <h3 class="product-title en">Reusable Metal Straws</h3>
+                            <h3 class="product-title uk">Багаторазові металеві соломинки</h3>
+                            <p class="product-price">$9.99 / 370₴</p>
+                            <p class="product-description en">Set of 8 stainless steel straws with cleaning brush and cotton pouch.</p>
+                            <p class="product-description uk">Набір з 8 соломинок з нержавіючої сталі з щіткою для чищення та бавовняним чохлом.</p>
+                            <button class="add-to-cart">
+                                <span class="en">Add to Cart</span>
+                                <span class="uk">Додати в кошик</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 -->
+                    <div class="product-card">
+                        <img src="/api/placeholder/300/200" alt="Beeswax Wraps" class="product-img">
+                        <div class="product-info">
+                            <h3 class="product-title en">Beeswax Food Wraps</h3>
+                            <h3 class="product-title uk">Харчові обгортки з бджолиного воску</h3>
+                            <p class="product-price">$15.99 / 590₴</p>
+                            <p class="product-description en">Reusable food wraps made from organic cotton and beeswax. Pack of 3 different sizes.</p>
+                            <p class="product-description uk">Багаторазові харчові обгортки з органічної бавовни та бджолиного воску. Набір з 3 різних розмірів.</p>
+                            <button class="add-to-cart">
+                                <span class="en">Add to Cart</span>
+                                <span class="uk">Додати в кошик</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Product 4 -->
+                    <div class="product-card">
+                        <img src="/api/placeholder/300/200" alt="Eco Bags" class="product-img">
+                        <div class="product-info">
+                            <h3 class="product-title en">Organic Cotton Produce Bags</h3>
+                            <h3 class="product-title uk">Органічні бавовняні сумки для продуктів</h3>
+                            <p class="product-price">$14.99 / 550₴</p>
+                            <p class="product-description en">Set of 5 reusable mesh bags for grocery shopping and produce storage.</p>
+                            <p class="product-description uk">Набір з 5 багаторазових сітчастих сумок для покупок продуктів та їх зберігання.</p>
+                            <button class="add-to-cart">
+                                <span class="en">Add to Cart</span>
+                                <span class="uk">Додати в кошик</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Categories -->
+        <section class="categories">
+            <div class="container">
+                <h2 class="section-title en">Shop by Category</h2>
+                <h2 class="section-title uk">Купуйте за категоріями</h2>
+                <div class="categories-flex">
+                    <!-- Category 1 -->
+                    <div class="category-card">
+                        <div class="category-icon">🪥</div>
+                        <h3 class="category-title en">Bathroom</h3>
+                        <h3 class="category-title uk">Ванна кімната</h3>
+                    </div>
+
+                    <!-- Category 2 -->
+                    <div class="category-card">
+                        <div class="category-icon">🍽️</div>
+                        <h3 class="category-title en">Kitchen</h3>
+                        <h3 class="category-title uk">Кухня</h3>
+                    </div>
+
+                    <!-- Category 3 -->
+                    <div class="category-card">
+                        <div class="category-icon">🧹</div>
+                        <h3 class="category-title en">Cleaning</h3>
+                        <h3 class="category-title uk">Прибирання</h3>
+                    </div>
+
+                    <!-- Category 4 -->
+                    <div class="category-card">
+                        <div class="category-icon">👜</div>
+                        <h3 class="category-title en">Shopping</h3>
+                        <h3 class="category-title uk">Покупки</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="benefits">
+            <div class="container">
+                <h2 class="section-title en">Why Choose Eco Products?</h2>
+                <h2 class="section-title uk">Чому варто обирати еко-товари?</h2>
+                <div class="benefits-flex">
+                    <!-- Benefit 1 -->
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🌍</div>
+                        <h3 class="benefit-title en">Eco-Friendly</h3>
+                        <h3 class="benefit-title uk">Екологічність</h3>
+                        <p class="benefit-description en">Our products are made from sustainable materials and reduce plastic pollution.</p>
+                        <p class="benefit-description uk">Наші товари виготовлені з екологічних матеріалів і зменшують забруднення пластиком.</p>
+                    </div>
+
+                    <!-- Benefit 2 -->
+                    <div class="benefit-card">
+                        <div class="benefit-icon">♻️</div>
+                        <h3 class="benefit-title en">Reusable</h3>
+                        <h3 class="benefit-title uk">Багаторазовість</h3>
+                        <p class="benefit-description en">Designed for long-term use, reducing waste and saving you money over time.</p>
+                        <p class="benefit-description uk">Розроблені для тривалого використання, зменшуючи відходи і економлячи ваші кошти з часом.</p>
+                    </div>
+
+                    <!-- Benefit 3 -->
+                    <div class="benefit-card">
+                        <div class="benefit-icon">👨‍👩‍👧‍👦</div>
+                        <h3 class="benefit-title en">Healthier Living</h3>
+                        <h3 class="benefit-title uk">Здоровіше життя</h3>
+                        <p class="benefit-description en">Free from harmful chemicals found in many conventional products.</p>
+                        <p class="benefit-description uk">Не містять шкідливих хімічних речовин, які часто присутні у звичайних товарах.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="testimonials">
+            <div class="container">
+                <h2 class="section-title en">Customer Reviews</h2>
+                <h2 class="section-title uk">Відгуки клієнтів</h2>
+                <div class="testimonials-flex">
+                    <!-- Testimonial 1 -->
+                    <div class="testimonial-card">
+                        <div class="rating">★★★★★</div>
+                        <p class="testimonial-text en">"I've
